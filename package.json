@@ -1,0 +1,26 @@
+{
+  "name": "bind9-manager-front",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc -b && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@popperjs/core": "^2.11.8",
+    "ant-design-vue": "^4.2.3",
+    "axios": "^1.7.2",
+    "vue": "^3.4.29",
+    "vue-router": "^4.0.13"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.5",
+    "less": "^4.2.0",
+    "typescript": "^5.2.2",
+    "unplugin-vue-components": "^0.27.1",
+    "vite": "^5.3.1",
+    "vue-tsc": "^2.0.21"
+  }
+}
