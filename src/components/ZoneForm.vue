@@ -1,13 +1,7 @@
 <template>
     <!-- Modal for the zone form -->
-    <a-modal
-        v-model:open="isModalVisible"
-        title="Zone Form"
-        ok-text="Save changes"
-        cancel-text="Close"
-        @ok="handleSaveZone"
-        @cancel="closeModal"
-    >
+    <a-modal v-model:open="isModalVisible" title="Zone Form" ok-text="Save changes" cancel-text="Close"
+        @ok="handleSaveZone" @cancel="closeModal">
         <!-- Form inside the modal -->
         <a-form @submit.prevent="handleSaveZone" layout="vertical">
             <!-- Form items for each field -->
@@ -89,7 +83,8 @@ const closeModal = () => {
  * Save the zone data (create or update)
  */
 const handleSaveZone = async () => {
-    await saveZoneData(zoneReq.value, isEdit.value);
+    const { success } = await saveZoneData(zoneReq.value, isEdit.value);
+    if (!success) return;
     closeModal();
     refreshZoneList?.();
 };

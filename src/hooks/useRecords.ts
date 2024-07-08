@@ -47,14 +47,16 @@ export function useRecords() {
    * Delete a record by its ID
    * @param {number} id - The ID of the record to delete
    */
-  const deleteRecordById = async (id: number) => {
+  const deleteRecordById = async (id: number): Promise<{ success: boolean }> => {
     try {
       // Call the delete API and display a success message
       await deleteRecord(id);
       message.success('Record deleted successfully');
+      return { success: true };
     } catch (error) {
       // Display an error message if the delete operation fails
       message.error('Failed to delete record: ' + error);
+      return { success: false };
     }
   };
 
@@ -63,20 +65,23 @@ export function useRecords() {
    * @param {CreateRecordReq & { id?: number }} record - The record data to save
    * @param {boolean} isEdit - Whether the operation is an update (true) or create (false)
    */
-  const saveRecordData = async (record: CreateRecordReq & { id?: number }, isEdit: boolean) => {
+  const saveRecordData = async (record: CreateRecordReq & { id?: number }, isEdit: boolean): Promise<{ success: boolean }> => {
     try {
       if (isEdit) {
         // Call the update API and display a success message
         await updateRecord(record as Record);
         message.success('Record updated successfully');
+        return { success: true };
       } else {
         // Call the create API and display a success message
         await createRecord(record as CreateRecordReq);
         message.success('Record created successfully');
+        return { success: true };
       }
     } catch (error) {
       // Display an error message if the save operation fails
       message.error('Failed to save record: ' + error);
+      return { success: false };
     }
   };
 

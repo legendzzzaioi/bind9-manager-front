@@ -1,4 +1,5 @@
 <template>
+    <Menu />
     <!-- Card to display configuration -->
     <a-card title="Configuration">
         <!-- Table to display configuration details -->
@@ -36,6 +37,7 @@
 import { ref, onMounted } from 'vue';
 import { useConfigs } from '../hooks/useConfigs';
 import { Config } from '../api/configs';
+import Menu from './Menu.vue';
 
 // Reactive state to control edit mode
 const isEdit = ref(false);
@@ -66,7 +68,8 @@ const refreshConfig = async () => {
 
 // Function to handle updating the configuration
 const handleUpdateConfig = async () => {
-    await saveConfig(config.value);
+    const { success } = await saveConfig(config.value);
+    if (!success) return;
     cancelEdit();
 };
 

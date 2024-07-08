@@ -1,13 +1,7 @@
 <template>
   <!-- Modal for the record form -->
-  <a-modal
-    v-model:open="isModalVisible"
-    title="Record Form"
-    ok-text="Save changes"
-    cancel-text="Close"
-    @ok="handleSaveRecord"
-    @cancel="closeModal"
-  >
+  <a-modal v-model:open="isModalVisible" title="Record Form" ok-text="Save changes" cancel-text="Close"
+    @ok="handleSaveRecord" @cancel="closeModal">
     <!-- Form inside the modal -->
     <a-form @submit.prevent="handleSaveRecord" layout="vertical">
       <!-- Form items for each field -->
@@ -95,9 +89,11 @@ const closeModal = () => {
 const handleSaveRecord = async () => {
   try {
     if (isEdit.value) {
-      await saveRecordData(recordReq.value as Record, true);
+      const { success } = await saveRecordData(recordReq.value as Record, true);
+      if (!success) { return; }
     } else {
-      await saveRecordData(recordReq.value as CreateRecordReq, false);
+      const { success } = await saveRecordData(recordReq.value as CreateRecordReq, false);
+      if (!success) { return; }
     }
     closeModal();
     refreshRecordList?.();

@@ -1,4 +1,5 @@
 <template>
+  <Menu />
   <div class="container zone-list">
     <!-- Display table only if there are zones available -->
     <a-table :data-source="zones" v-if="zones.length" row-key="domain">
@@ -10,9 +11,11 @@
       <a-table-column title="Operation" key="operation">
         <template #default="{ record }">
           <!-- Buttons for operations on each record -->
-          <a-button type="primary" @click="editZone(record)">Edit</a-button>
-          <a-button type="primary" @click="() => viewRecords(record.domain)">View Records</a-button>
-          <a-button type="primary" danger @click="deleteZone(record.domain)">Delete</a-button>
+          <a-space>
+            <a-button type="primary" @click="editZone(record)">Edit</a-button>
+            <a-button type="primary" @click="() => viewRecords(record.domain)">View Records</a-button>
+            <a-button type="primary" danger @click="deleteZone(record.domain)">Delete</a-button>
+          </a-space>
         </template>
       </a-table-column>
     </a-table>
@@ -25,8 +28,10 @@
     <DeleteZoneForm ref="deleteZoneForm" />
 
     <!-- Buttons for creating new zone and refreshing the list -->
-    <a-button type="primary" @click="addNewZone">Create Zone</a-button>
-    <a-button @click="refreshZoneList">Refresh</a-button>
+    <a-space>
+      <a-button type="primary" @click="addNewZone">Create Zone</a-button>
+      <a-button @click="refreshZoneList">Refresh</a-button>
+    </a-space>
   </div>
 </template>
 
@@ -35,8 +40,9 @@ import { ref, provide, onMounted } from 'vue';
 import { ZoneReq } from '../api/zones';
 import ZoneForm from '../components/ZoneForm.vue';
 import DeleteZoneForm from '../components/DeleteZoneForm.vue';
-import RecordList from './RecordList.vue';
+import RecordList from '../components/RecordList.vue';
 import { useZones } from '../hooks/useZones';
+import Menu from './Menu.vue';
 
 // Get zones and functions from the custom hook
 const { zones, fetchAllZones, refreshZoneList } = useZones();

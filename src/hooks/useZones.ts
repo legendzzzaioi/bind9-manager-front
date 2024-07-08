@@ -49,23 +49,26 @@ export function useZones() {
    * @param {ZoneReq} zoneReq - The zone data to save
    * @param {boolean} isEdit - Whether the operation is an update (true) or create (false)
    */
-  const saveZoneData = async (zoneReq: ZoneReq, isEdit: boolean) => {
+  const saveZoneData = async (zoneReq: ZoneReq, isEdit: boolean): Promise<{ success: boolean }> => {
     try {
       // Remove `serial` property before sending the update request
       const { serial, ...updateReq } = zoneReq as Zone & { serial?: number };
 
       // Make an API call to either create or update the zone
       const response = isEdit ? await updateZone(updateReq) : await createZone(zoneReq);
-      
+
       // Check response code and display appropriate message
       if (response.code === 400) {
         message.error('Failed to save zone: ' + response.context);
+        return { success: false };
       } else {
         message.success('Zone saved successfully', 5);
+        return { success: true };
       }
     } catch (error) {
       // Display an error message if saving fails
       message.error('Failed to save zone: ' + error);
+      return { success: false };
     }
   };
 
@@ -74,25 +77,25 @@ export function useZones() {
    * @param {string} domain - The domain of the zone to delete
    * @param {boolean} withRecord - Whether to delete the zone with its records
    */
-  const deleteZoneData = async (domain: string, withRecord: boolean) => {
+  const deleteZoneData = async (domain: string, withRecord: boolean): Promise<{ success: boolean }> => {
     try {
       // Make an API call to delete the zone
       const response = await deleteZone(domain, withRecord);
-      
+
       // Check response code and display appropriate message
       if (response.code === 400) {
         message.error('Failed to delete zone: ' + response.context);
+        return { success: false };
       } else {
         message.success('Zone deleted successfully', 5);
+        return { success: true };
       }
     } catch (error) {
       // Display an error message if deletion fails
       message.error('Failed to delete zone: ' + error);
+      return { success: false };
     }
   };
-
-  // Fetch all zones when the function is called (component mounted)
-  fetchAllZones();
 
   // Return the state and functions to be used in components
   return {
@@ -100,6 +103,6 @@ export function useZones() {
     fetchAllZones,
     refreshZoneList,
     saveZoneData,
-    deleteZoneData
+    deleteZoneData,
   };
 }

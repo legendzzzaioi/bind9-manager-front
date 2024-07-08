@@ -4,11 +4,19 @@ This frontend project provides a simple web interface for managing Bind9 using t
 
 ### Example
 
+admin/admin
+
+![login](./images/login.png)
+
 ![createzone](./images/createzone.png)
 
 ![zones](./images/zones.png)
 
 ![viewrecords](./images/viewrecords.png)
+
+![user](./images/user.png)
+
+![log](./images/log.png)
 
 ### Usage
 

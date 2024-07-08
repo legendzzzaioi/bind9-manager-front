@@ -1,13 +1,7 @@
 <template>
   <!-- Modal for confirming the deletion -->
-  <a-modal
-    v-model:open="isModalVisible"
-    title="Confirm Deletion"
-    ok-text="Delete with Record"
-    cancel-text="Cancel"
-    @ok="handlerRemoveZone(true)"
-    @cancel="closeModal"
-  >
+  <a-modal v-model:open="isModalVisible" title="Confirm Deletion" ok-text="Delete with Record" cancel-text="Cancel"
+    @ok="handlerRemoveZone(true)" @cancel="closeModal">
     <!-- Message prompting the user for confirmation -->
     <p>Are you sure you want to delete this zone? Do you also want to delete the corresponding record?</p>
     <!-- Footer with action buttons -->
@@ -54,7 +48,8 @@ const closeModal = () => {
  */
 const handlerRemoveZone = async (withRecord: boolean) => {
   if (!zoneToDelete.value) return;
-  await deleteZoneData(zoneToDelete.value, withRecord);
+  const { success } = await deleteZoneData(zoneToDelete.value, withRecord);
+  if (!success) return;
   closeModal();
   refreshZoneList?.();
 };

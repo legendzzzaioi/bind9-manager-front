@@ -4,8 +4,10 @@
     <div class="container record-list">
       <!-- Row for buttons to create and refresh records -->
       <a-row justify="end">
-        <a-button type="primary" @click="addNewRecord">Create Record</a-button>
-        <a-button @click="handleRefreshRecords">Refresh</a-button>
+        <a-space>
+          <a-button type="primary" @click="addNewRecord">Create Record</a-button>
+          <a-button @click="handleRefreshRecords">Refresh</a-button>
+        </a-space>
       </a-row>
       <!-- Table displaying records if available -->
       <a-table :data-source="records" v-if="records.length" row-key="id">
@@ -17,8 +19,10 @@
         <a-table-column title="Operation" key="operation">
           <template #default="{ record }">
             <!-- Buttons for operations on each record -->
-            <a-button type="primary" @click="editRecord(record)">Edit</a-button>
-            <a-button type="primary" danger @click="handleRemoveRecord(record.id)">Delete</a-button>
+            <a-space>
+              <a-button type="primary" @click="editRecord(record)">Edit</a-button>
+              <a-button type="primary" danger @click="handleRemoveRecord(record.id)">Delete</a-button>
+            </a-space>
           </template>
         </a-table-column>
       </a-table>
@@ -73,7 +77,8 @@ const openModal = (zoneDomain: string) => {
 
 // Function to handle removing a record by ID
 const handleRemoveRecord = async (id: number) => {
-  await deleteRecordById(id);
+  const { success } = await deleteRecordById(id);
+  if (!success) return;
   await refreshRecordList(domain.value);
 };
 

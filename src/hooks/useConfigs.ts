@@ -31,15 +31,17 @@ export function useConfigs() {
    * Save a configuration by updating it
    * @param {Config} config - The configuration to save
    */
-  const saveConfig = async (config: Config) => {
+  const saveConfig = async (config: Config): Promise<{ success: boolean }> => {
     try {
       // Make an API call to update the configuration
       await updateConfig(config);
       // Display a success message if the update is successful
       message.success('Config updated successfully');
+      return { success: true };
     } catch (error) {
       // Display an error message if updating fails
       message.error('Failed to update config: ' + error);
+      return { success: false };
     }
   };
 
