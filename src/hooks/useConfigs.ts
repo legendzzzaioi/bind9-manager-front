@@ -11,7 +11,7 @@ export function useConfigs() {
    * @param {string} key - The key of the configuration to fetch
    * @returns {Promise<Config | undefined>} - The fetched configuration or undefined if an error occurs
    */
-  const fetchConfig = async (key: string) => {
+  const fetchConfig = async (key: string): Promise<Config> => {
     try {
       // Make an API call to fetch the configuration
       const response = await getConfig(key);
@@ -21,7 +21,7 @@ export function useConfigs() {
       return response;
     } catch (error) {
       // Display an error message if fetching fails
-      message.error('Failed to fetch config: ' + error);
+      message.error('Failed to fetch config: ' + error.response.data.trim());
       // Return undefined in case of an error
       return undefined;
     }
@@ -33,6 +33,10 @@ export function useConfigs() {
    */
   const saveConfig = async (config: Config): Promise<{ success: boolean }> => {
     try {
+      if (!config.value) {
+        message.error('context cannot be empty');
+        return { success: false };
+      }
       // Make an API call to update the configuration
       await updateConfig(config);
       // Display a success message if the update is successful
@@ -40,7 +44,7 @@ export function useConfigs() {
       return { success: true };
     } catch (error) {
       // Display an error message if updating fails
-      message.error('Failed to update config: ' + error);
+      message.error('Failed to update config: ' + error.response.data.trim());
       return { success: false };
     }
   };

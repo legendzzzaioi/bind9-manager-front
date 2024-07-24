@@ -22,9 +22,9 @@ apiClient.interceptors.response.use(response => {
   return response;
 }, error => {
   if (error.response && error.response.status === 401) {
-    message.error('Unauthorized. Please login again.');
+    message.error('Unauthorized. Please login again.').then();
     localStorage.removeItem('token');
-    router.push({name: 'Login'});
+    router.push({name: 'Login'}).then();
   }
   return Promise.reject(error);
 });

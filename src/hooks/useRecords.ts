@@ -1,6 +1,6 @@
-import { ref } from 'vue';
-import { getRecords, deleteRecord, createRecord, updateRecord, Record, CreateRecordReq } from '../api/records';
-import { message } from 'ant-design-vue';
+import {ref} from 'vue';
+import {createRecord, CreateRecordReq, deleteRecord, getRecords, Record, updateRecord} from '../api/records';
+import {message} from 'ant-design-vue';
 
 export function useRecords() {
   // Reactive state to store records
@@ -17,9 +17,8 @@ export function useRecords() {
       // Use the provided domain or the current domain
       const domainToUse = currentDomain || domain.value;
       // Fetch records from the API
-      const response = await getRecords(domainToUse);
       // Update the records state with the response
-      records.value = response;
+      records.value = await getRecords(domainToUse);
     } catch (error) {
       // Reset records to an empty array in case of an error
       records.value = [];
@@ -55,7 +54,7 @@ export function useRecords() {
       return { success: true };
     } catch (error) {
       // Display an error message if the delete operation fails
-      message.error('Failed to delete record: ' + error);
+      message.error('Failed to delete record: ' + error.response.data.trim());
       return { success: false };
     }
   };
@@ -67,6 +66,10 @@ export function useRecords() {
    */
   const saveRecordData = async (record: CreateRecordReq & { id?: number }, isEdit: boolean): Promise<{ success: boolean }> => {
     try {
+      if (!record.domain || !record.name || !record.value || !record.type){
+        message.error('name,type,value cannot be empty');
+        return { success: false };
+      }
       if (isEdit) {
         // Call the update API and display a success message
         await updateRecord(record as Record);
@@ -80,7 +83,7 @@ export function useRecords() {
       }
     } catch (error) {
       // Display an error message if the save operation fails
-      message.error('Failed to save record: ' + error);
+      message.error('Failed to save record: ' + error.response.data.trim());
       return { success: false };
     }
   };

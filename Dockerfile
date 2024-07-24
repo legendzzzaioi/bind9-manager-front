@@ -1,4 +1,4 @@
-FROM node:20.14.0 as build
+FROM node:20.15.1 as build
 
 WORKDIR /app
 RUN npm config set registry https://registry.npmmirror.com
@@ -8,7 +8,7 @@ RUN npm install
 COPY . .
 RUN npm run build
 
-FROM nginx:1.26.0-alpine
+FROM nginx:1.27.0-alpine
 
 COPY --from=build /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 COPY --from=build /app/dist /app

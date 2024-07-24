@@ -7,9 +7,6 @@ export function useLog() {
     const loginlogs = ref<LoginLogResp>();
     const userlogs = ref<UserLogResp>();
     const total = ref<number>(0);
-    const page = ref<number>(0);
-    const pageSize = ref<number>(0);
-
 
     const fetchAllOperationLogs = async (page: number, pageSize: number) => {
         try {
@@ -19,7 +16,7 @@ export function useLog() {
         } catch (error) {
             operationlogs.value = undefined;
             total.value = 0;
-            message.error('Failed to fetch operation logs: ' + error);
+            message.error('Failed to fetch operation logs: ' + error.response.data.trim());
         }
     };
 
@@ -31,7 +28,7 @@ export function useLog() {
         } catch (error) {
             loginlogs.value = undefined;
             total.value = 0;
-            message.error('Failed to fetch login logs: ' + error);
+            message.error('Failed to fetch login logs: ' + error.response.data.trim());
         }
     };
 
@@ -43,7 +40,7 @@ export function useLog() {
         } catch (error) {
             userlogs.value = undefined;
             total.value = 0;
-            message.error('Failed to fetch user logs: ' + error);
+            message.error('Failed to fetch user logs: ' + error.response.data.trim());
         }
     };
 

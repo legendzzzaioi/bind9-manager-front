@@ -1,7 +1,7 @@
 <template>
   <!-- Modal for confirming the deletion -->
   <a-modal v-model:open="isModalVisible" title="Confirm Deletion" ok-text="Delete with Record" cancel-text="Cancel"
-    @ok="handlerRemoveZone(true)" @cancel="closeModal">
+           @ok="handlerRemoveZone(true)" @cancel="closeModal">
     <!-- Message prompting the user for confirmation -->
     <p>Are you sure you want to delete this zone? Do you also want to delete the corresponding record?</p>
     <!-- Footer with action buttons -->
@@ -14,14 +14,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref, inject } from 'vue';
-import { useZones } from '../hooks/useZones';
+import {ref, inject} from 'vue';
+import {useZones} from '../hooks/useZones';
 
 // Inject the function to refresh the zone list
-const refreshZoneList = inject<() => void>('refreshZoneList');
+const fetchAllZones = inject<() => void>('fetchAllZones');
 
 // Use the custom hook for deleting zone data
-const { deleteZoneData } = useZones();
+const {deleteZoneData} = useZones();
 
 // State to track the visibility of the modal
 const isModalVisible = ref(false);
@@ -48,10 +48,10 @@ const closeModal = () => {
  */
 const handlerRemoveZone = async (withRecord: boolean) => {
   if (!zoneToDelete.value) return;
-  const { success } = await deleteZoneData(zoneToDelete.value, withRecord);
+  const {success} = await deleteZoneData(zoneToDelete.value, withRecord);
   if (!success) return;
   closeModal();
-  refreshZoneList?.();
+  fetchAllZones?.();
 };
 
 // Expose the openModal function to the parent component

@@ -14,7 +14,7 @@
             </template>
             <a-button type="link">
               <span>{{ username }}</span>
-              <DownOutlined />
+              <DownOutlined/>
             </a-button>
           </a-dropdown>
         </a-menu-item>
@@ -25,14 +25,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue';
-import { jwtDecode } from 'jwt-decode';
-import { useRouter } from 'vue-router';
-import { useLogin } from '../hooks/useLogin';
-import { DownOutlined } from '@ant-design/icons-vue';
+import {ref, watch} from 'vue';
+import {jwtDecode} from 'jwt-decode';
+import {useRouter} from 'vue-router';
+import {useLogin} from '../hooks/useLogin';
+import {DownOutlined} from '@ant-design/icons-vue';
 
 const selectedKeys = ref<string[]>([]);
-const { logoutHandler } = useLogin();
+const {logoutHandler} = useLogin();
 const router = useRouter();
 
 const username = ref<string>('User');
@@ -45,10 +45,10 @@ const getUsernameFromToken = (token: string | null): string => {
 };
 
 const menuItems = [
-  { key: '1', to: { name: 'Zone' }, label: 'Zone' },
-  { key: '2', to: { name: 'Config' }, label: 'Config' },
-  { key: '3', to: { name: 'User' }, label: 'User' },
-  { key: '4', to: { name: 'Log' }, label: 'Log' },
+  {key: '1', to: {name: 'Zone'}, label: 'Zone'},
+  {key: '2', to: {name: 'Config'}, label: 'Config'},
+  {key: '3', to: {name: 'User'}, label: 'User'},
+  {key: '4', to: {name: 'Log'}, label: 'Log'},
 ];
 
 // Watch for route changes and update selectedKeys accordingly
@@ -69,6 +69,6 @@ username.value = getUsernameFromToken(token);
 // Function to handle logout
 const handleLogout = async () => {
   await logoutHandler(); // Calls the logout function from useLogin hook
-  router.push({ name: 'Login' }); // Redirect to login page after logout
+  await router.push({name: 'Login'}); // Redirect to login page after logout
 };
 </script>

@@ -79,7 +79,7 @@ const openModal = (zoneDomain: string) => {
 const handleRemoveRecord = async (id: number) => {
   const { success } = await deleteRecordById(id);
   if (!success) return;
-  await refreshRecordList(domain.value);
+  await fetchAllRecords(domain.value);
 };
 
 // Function to refresh the list of records
@@ -88,7 +88,7 @@ const handleRefreshRecords = async () => {
 };
 
 // Provide the refresh function to child components
-provide('refreshRecordList', refreshRecordList);
+provide('fetchAllRecords', fetchAllRecords);
 
 // Expose the openModal function to be used externally
 defineExpose({

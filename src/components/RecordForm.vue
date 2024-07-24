@@ -38,9 +38,10 @@
 import { ref, inject } from 'vue';
 import { CreateRecordReq, Record } from '../api/records';
 import { useRecords } from '../hooks/useRecords';
+import {message} from "ant-design-vue";
 
 // Inject the function to refresh the record list
-const refreshRecordList = inject<() => void>('refreshRecordList');
+const fetchAllRecords = inject<() => void>('fetchAllRecords');
 
 // Use the custom hook for saving record data
 const { saveRecordData } = useRecords();
@@ -96,7 +97,7 @@ const handleSaveRecord = async () => {
       if (!success) { return; }
     }
     closeModal();
-    refreshRecordList?.();
+    fetchAllRecords?.();
   } catch (error) {
     console.error('Failed to save record:', error);
   }

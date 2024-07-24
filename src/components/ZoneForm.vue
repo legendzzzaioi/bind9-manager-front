@@ -39,7 +39,7 @@ import { ZoneReq } from '../api/zones';
 import { useZones } from '../hooks/useZones';
 
 // Inject the function to refresh the zone list
-const refreshZoneList = inject<() => void>('refreshZoneList');
+const fetchAllZones = inject<() => void>('fetchAllZones');
 
 // State to track if the form is in edit mode
 const isEdit = ref(false);
@@ -86,7 +86,7 @@ const handleSaveZone = async () => {
     const { success } = await saveZoneData(zoneReq.value, isEdit.value);
     if (!success) return;
     closeModal();
-    refreshZoneList?.();
+    fetchAllZones?.();
 };
 
 // Expose the openModal function to the parent component

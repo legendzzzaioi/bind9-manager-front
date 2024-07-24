@@ -23,7 +23,7 @@ admin/admin
 Build Docker Image
 
 ```
-docker build -t bind9-manager-front:v1 .
+docker build -t legendzzzaioi/bind9-manager-front:v1 .
 ```
 
 Run Docker Container
@@ -33,7 +33,7 @@ docker run --name bind9-manager-front \
   --link bind9-manager-service:bind9-manager-service \
   --restart always \
   -p 80:80 \
-  -d bind9-manager-front:v1
+  -d legendzzzaioi/bind9-manager-front:v1
 ```
 
 Usage with Kubernetes
